@@ -1,0 +1,251 @@
+
+
+<!-- Fofo: Adicione um emoji de coração no título da aba -->
+<link rel="icon" href="https://emojiapi.dev/api/v1/2764/64.png">
+
+<style>
+    body {
+        background: linear-gradient(135deg, #ffe6f7 0%, #fffbe6 100%);
+        font-family: 'Comic Sans MS', 'Comic Sans', cursive, sans-serif;
+        color: #d72660;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        background: rgba(255,255,255,0.85);
+        border-radius: 24px;
+        box-shadow: 0 8px 32px rgba(215,38,96,0.12);
+        max-width: 700px;
+        margin: 40px auto;
+        padding: 32px 24px;
+        border: 2px dashed #ffb3c6;
+    }
+
+    h1 {
+        text-align: center;
+        font-size: 2.5em;
+        margin-bottom: 0.3em;
+        letter-spacing: 2px;
+        text-shadow: 1px 2px 8px #fff0f6;
+        animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+        0% { color: #d72660; }
+        50% { color: #ffb3c6; }
+        100% { color: #d72660; }
+    }
+
+    .mensagem {
+        font-size: 1.2em;
+        background: #fff0f6;
+        border-radius: 12px;
+        padding: 12px 18px;
+        margin-bottom: 18px;
+        box-shadow: 0 2px 8px #ffe6f7;
+    }
+
+    #cronometro {
+        font-size: 1.5em;
+        color: #ff69b4;
+        font-weight: bold;
+        text-align: center;
+        margin: 18px 0 28px 0;
+        letter-spacing: 1px;
+        background: #fffbe6;
+        border-radius: 10px;
+        padding: 10px 0;
+        box-shadow: 0 1px 6px #ffe6f7;
+    }
+
+    .fotos {
+        display: flex;
+        justify-content: center;
+        gap: 18px;
+        margin: 18px 0;
+        flex-wrap: wrap;
+    }
+
+    .fotos img {
+        border-radius: 18px;
+        border: 3px solid #ffb3c6;
+        box-shadow: 0 4px 16px #ffd6e0;
+        max-width: 180px;
+        max-height: 180px;
+        object-fit: cover;
+        transition: transform 0.2s;
+        background: #fff0f6;
+    }
+
+    .fotos img:hover {
+        transform: scale(1.08) rotate(-2deg);
+        box-shadow: 0 8px 32px #ffb3c6;
+    }
+
+    p {
+        font-size: 1.1em;
+        line-height: 1.7;
+        background: #fff0f6;
+        border-radius: 10px;
+        padding: 10px 16px;
+        margin: 14px 0;
+        box-shadow: 0 1px 6px #ffe6f7;
+    }
+
+    .containerQuiz {
+        background: #fffbe6;
+        border-radius: 16px;
+        box-shadow: 0 2px 12px #ffe6f7;
+        padding: 18px 12px 32px 12px;
+        margin-top: 28px;
+        text-align: center;
+        border: 2px dotted #ffb3c6;
+        position: relative;
+    }
+
+    .containerQuiz h2 {
+        color: #d72660;
+        margin-bottom: 18px;
+        font-size: 1.4em;
+        font-family: 'Comic Sans MS', cursive, sans-serif;
+        letter-spacing: 1px;
+    }
+
+    .containerQuiz button {
+        background: linear-gradient(90deg, #ffb3c6 0%, #ffe6f7 100%);
+        color: #d72660;
+        border: none;
+        border-radius: 12px;
+        padding: 12px 28px;
+        font-size: 1.1em;
+        font-family: inherit;
+        font-weight: bold;
+        margin: 0 10px;
+        box-shadow: 0 2px 8px #ffd6e0;
+        cursor: pointer;
+        transition: background 0.2s, transform 0.2s;
+    }
+
+    .containerQuiz button:hover {
+        background: linear-gradient(90deg, #ffe6f7 0%, #ffb3c6 100%);
+        transform: scale(1.07);
+        color: #fff;
+    }
+
+    #fugaoBtn {
+        background: linear-gradient(90deg, #ffe6f7 0%, #ffd6e0 100%);
+        color: #ff69b4;
+        border: 2px dashed #ffb3c6;
+        font-size: 1em;
+        padding: 10px 22px;
+        position: absolute;
+        left: 10px;
+        top: 60px;
+        transition: left 0.3s, top 0.3s;
+    }
+
+    #fugaoBtn:hover {
+        background: #fff0f6;
+        color: #d72660;
+        border-color: #ff69b4;
+    }
+
+    /* Adicione corações animados no fundo */
+    .hearts-bg {
+        pointer-events: none;
+        position: fixed;
+        top: 0; left: 0; width: 100vw; height: 100vh;
+        z-index: 0;
+        overflow: hidden;
+    }
+    .heart {
+        position: absolute;
+        width: 32px;
+        height: 32px;
+        background: url('https://emojiapi.dev/api/v1/2764/64.png') no-repeat center/contain;
+        opacity: 0.7;
+        animation: floatHearts 8s linear infinite;
+    }
+    @keyframes floatHearts {
+        0% { transform: translateY(100vh) scale(0.8) rotate(-10deg);}
+        100% { transform: translateY(-10vh) scale(1.2) rotate(10deg);}
+    }
+</style>
+<div class="hearts-bg"></div>
+<script>
+    // Gera corações animados no fundo
+    function createHearts() {
+        const bg = document.querySelector('.hearts-bg');
+        for (let i = 0; i < 18; i++) {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDelay = (Math.random() * 8) + 's';
+            heart.style.opacity = 0.5 + Math.random() * 0.5;
+            bg.appendChild(heart);
+        }
+    }
+    createHearts();
+</script>
+
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Nosso Amor</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Nosso Amor ❤️</h1>
+    <p class="mensagem">
+      Desde o dia 26 de março de 2022, minha vida se tornou mais feliz com você ao meu lado. <br>
+      <br>
+      Estamos juntos há:
+    </p>
+    
+    <div id="cronometro"></div>
+
+    <div class="fotos">
+      <img src="img/WhatsApp Image 2025-06-11 at 2.54.23 PM (1).jpeg" alt="Foto do casal 1">
+    </div>
+
+    <p>
+        Feliz Dia dos Namorados, meu amor! Fiz isso para você como uma surpresinha. Talvez você não goste disso ou talvez diga a sua famosa frase: "Quanta tecnologia!" Kkkkkkkkkkk... Mas quero que saiba que foi feito com muito amor e com muito carinho.
+    </p>
+
+    <div class="fotos">
+        <img src="img/IMG_2345.jpg" alt="fotoCasal02">
+        <img src="img/WhatsApp Image 2025-06-11 at 2.54.22 PM.jpeg" alt="">
+    </div>
+
+    <p>
+        Hoje é o dia de celebrar o que há de mais lindo no mundo: o nosso amor. Cada momento ao seu lado é especial, cheio de risadas, cumplicidade e um carinho que aquece meu coração. <br><br>
+
+        Você é a pessoa que me faz acreditar que o amor pode ser simples, mas ao mesmo tempo a coisa mais incrível do universo. Não importa se estamos fazendo algo grandioso ou apenas curtindo um momento bobo juntos – o importante é que é com você. <br><br>
+
+        Obrigado por ser minha parceira, minha melhor amiga e meu porto seguro. Eu te amo mais do que as palavras podem dizer, mas prometo passar a vida toda tentando demonstrar. <br><br>
+    </p>
+
+    <div class="fotos">
+        <img src="img/ursinho-fofo-apaixonado.gif" alt="">
+    </div>
+
+    <div class="containerQuiz" style="position: relative; min-height: 120px;">
+        <h2>
+            Você aceita viver a vida ao meu lado?
+        </h2>
+
+        <button onclick="window.location.href='Quiz.html'">Sim!</button>
+        <button id="fugaoBtn" style="position:absolute; left:10px; top:60px;">Não quero</button>
+    </div>
+
+
+
+
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
